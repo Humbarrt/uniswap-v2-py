@@ -393,7 +393,7 @@ class UniswapV2Client(UniswapObject):
         params = self._create_transaction_params()
         return self._send_transaction(func, params)
 
-    def swap_exact_tokens_for_tokens(self, amount, min_out, path, to, deadline, gas):
+    def swap_exact_tokens_for_tokens(self, amount, min_out, path, to, deadline, gas, value):
         """
         Swaps an exact amount of input tokens for as many output tokens as
         possible, along the route determined by the path. The first element of
@@ -410,7 +410,7 @@ class UniswapV2Client(UniswapObject):
         """
         self.approve(path[0], amount)
         func = self.router.functions.swapExactTokensForTokens(amount, min_out, path, to, deadline)
-        params = self._create_transaction_params(gas=gas)        #Added a gas amount variable
+        params = self._create_transaction_params(gas=gas, value=value)        #Added a gas amount variable
         return self._send_transaction(func, params)
 
     def swap_tokens_for_exact_tokens(self, amount_out, amount_in_max, path, to, deadline):
